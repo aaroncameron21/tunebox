@@ -3,6 +3,7 @@ html(lang='en')
   head
     p!= partials.header
     link(rel="stylesheet",href="/audio-visualizer/style.css")
+    link(href="/audio-player/css/bootstrap3_player.css" rel="stylesheet")
   body(ng-app="VersionApp")
     div.container(ng-controller="VersionController",ng-init="initialize(#{ JSON.stringify(data) });",)
       p!= partials.navbar
@@ -17,7 +18,7 @@ html(lang='en')
                   canvas(id='canvas',width='800',height='150')
                 br
                 audio(src="/583084769b8430135219e50a/583754c72d266834eedaa9b4.wav",id="audio",controls='') element not supported
-                a.btn.btn-default.btn-block(ng-show="data.file",href='/583084769b8430135219e50a/583754c72d266834eedaa9b4.wav') Audio
+                a.btn.btn-default.btn-block(ng-show="data.file",href='/583084769b8430135219e50a/583754c72d266834eedaa9b4.wav') Download
                 a.btn.btn-default.btn-block(ng-show="!data.file",href="/version/upload/{{data.id}}") Upload
                 br
                 h3.notop Description
@@ -53,3 +54,4 @@ html(lang='en')
     p!= partials.footer
     script(src="/ang/version.js")
     script(src='/audio-visualizer/main.js')
+    script(src='/audio-player/js/bootstrap3_player.js')
