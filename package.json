@@ -1,7 +1,7 @@
 {
   "name": "tunebox",
   "version": "1.0.0",
-  "description": "Version and project progress management tool for music producers",
+  "description": "Versioning and project management tool for music producers",
   "main": "server.js",
   "author": "Aaron Cameron",
   "license": "",
