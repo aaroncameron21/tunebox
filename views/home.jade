@@ -1,0 +1,58 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+
+    meta(name='description', content='')
+    meta(name='author', content='Aaron Cameron')
+
+    link(rel="icon" href="favicon.png")
+    link(href='css/custom-bootstrap.css', rel='stylesheet')
+    link(href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/yeti/bootstrap.min.css', rel='stylesheet')
+    link(href='css/cehs-bootstrap.css', rel='stylesheet')
+
+    title SOA Portal
+
+  body
+    .container
+      div.form-signin.well.well-lg.blackfade(style="max-width:630px;")
+        img(src="img/banner.png", style="width: 100%; padding-bottom: 20px;")
+        //- h1.form-signin-heading CEHS Portal
+        if user
+          if !user.customData.profileComplete
+            div.alert.alert-warning
+              strong Profile Incomplete.
+              p You must complete your profile before accessing travel requests.
+          div.row
+            div.col-md-6
+              a.button.btn.btn-primary.btn-lg.btn-block(href="javascript:{}", onclick="document.getElementById('addSample-form').submit(); return false;") Add Sample
+                span.glyphicon.glyphicon-plus(style="padding-left: 10px")
+            div.col-md-6
+              a.button.btn.btn-primary.btn-lg.btn-block(href="javascript:{}", onclick="document.getElementById('addExperiment-form').submit(); return false;") Add Experiment
+                span.glyphicon.glyphicon-plus(style="padding-left: 10px")
+          br
+          a.button.btn.btn-primary.btn-lg.btn-block(href="javascript:{}", onclick="document.getElementById('searchExperiments-form').submit(); return false;") Search Experiments
+            span.glyphicon.glyphicon-search(style="padding-left: 10px")
+          //- a.button.btn.btn-primary.btn-lg.btn-block(href="javascript:{}", onclick="document.getElementById('leaveList-form').submit(); return false;") Leave Requests
+          //-   span.glyphicon.glyphicon-th-list(style="padding-left: 10px")
+          a.button.btn.btn-warning.btn-lg.btn-block(href="javascript:{}", onclick="document.getElementById('logout-form').submit(); return false;") Logout
+            span.glyphicon.glyphicon-log-out(style="padding-left: 10px")
+        if !user
+          a.button.btn.btn-primary.btn-lg.btn-block(href="/register") Sign up
+          a.button.btn.btn-primary.btn-lg.btn-block(href="/login") Login
+        form(id="addSample-form", method="get", action="addSample")
+        form(id="addExperiment-form", method="get", action="addExperiment")
+        form(id="viewExperiment-form", method="get", action="viewExperiment?id=582104cd5144241da0a1dab0")
+        form(id="searchExperiments-form", method="get", action="searchExperiments")
+        form(id="leaveList-form", method="get", action="leaveList")
+        form(id="logout-form", action='/logout', method='POST')
+
+    // /container
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
+    script.
+      window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\\/script>')
+    // <script src="../../dist/js/bootstrap.min.js"></script>
+    // IE10 viewport hack for Surface/desktop Windows 8 bug
+    // <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>

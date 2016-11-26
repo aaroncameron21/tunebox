@@ -1,0 +1,26 @@
+doctype html
+html(lang='en')
+  head
+    p!= partials.header
+  body(ng-app="TuneApp")
+    div.container(ng-controller="TuneController",ng-init="initialize(#{ JSON.stringify(data) });")
+      p!= partials.navbar
+      form(id="form")
+        h3 Tune List
+        div.well.well-lg
+          table.table.table-striped
+            thead
+              tr
+                th NAME
+                th DESCRIPTION
+                th DATE MODIFIED
+            tbody
+              tr(ng-repeat="tune in data track by $index")
+              tr.row-hover(ng-repeat="tune in data track by $index", ng-click="redirect('/tune/' + tune._id);")
+                td {{tune.name}}
+                td {{tune.description}}
+                td {{tune.dateModified.toLocaleDateString()}}
+        input(type="hidden",name="delete",id="delete")
+        input(name='_csrf', type='hidden', value=csrfToken)
+    p!= partials.footer
+    script(src="/ang/tune.js")

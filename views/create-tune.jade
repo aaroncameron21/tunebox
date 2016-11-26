@@ -1,0 +1,44 @@
+doctype html
+html(lang='en')
+  head
+    p!= partials.header
+  body(ng-app="TuneApp")
+    div.container(ng-controller="TuneController",ng-init="initialize();",)
+      p!= partials.navbar
+      form(id="form")
+        h3 New Tune
+        div.well.well-lg
+          div.row
+            div.col-md-4
+              b Name
+              br
+              input(type='text',name='name',ng-value="data.name",ng-model="data.name")
+            div.col-md-8
+              b Description
+              .input-group(style="width:100%")
+                textarea.form-control(rows=3, name='description',placeholder="Describe your tune here.",ng-value="data.description",ng-model="data.description")
+          br
+          i(style="color: #888888") Add tags/keywords to help people find this tune. Click a tag to remove it. 8 tag limit.
+          br
+          br
+          div.row
+            .input-group
+              span.input-group-addon Tag
+              input#name.form-control(type='text', aria-describedby='tagText', name='tagText',ng-value="tagText",ng-model="tagText")
+              span.input-group-btn
+                button.btn.btn-default(type='button',ng-click="addTag();")
+                  span.glyphicon.glyphicon-plus
+          br
+          div.well.well-lg
+            span
+              i(ng-show="data.tags.length===0") No tags
+              span.label.label-primary.label-tag(
+                ng-repeat="tag in data.tags track by $index",
+                ng-click="deleteTag(tag);"
+                ) {{tag}}
+          br
+        input(name='tags', id="tags", type='hidden')
+        input(name='_csrf', type='hidden', value=csrfToken)
+        button.login.btn.btn-primary.btn-lg.btn-block(type='button',ng-click="submitForm(false)") Save
+    p!= partials.footer
+    script(src="/ang/tune.js")

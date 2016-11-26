@@ -1,0 +1,29 @@
+doctype html
+html(lang='en')
+  head
+    p!= partials.header
+  body(ng-app="VersionApp")
+    div.container(ng-controller="VersionController",ng-init="initialize(#{ JSON.stringify(data) });",)
+      p!= partials.navbar
+      form#uploadForm(ref='uploadForm', action='/upload/' + data.id, method='post', enctype='multipart/form-data')
+        span
+          h1 Upload audio
+        div.well.well-lg
+          div.row
+            div.col-md-12
+              div.well
+                //- input(type='file', name='file',style="color:white;")
+                //- input(type='submit', value='Upload!')
+                input(name='_csrf', type='hidden', value=csrfToken)
+                .input-group
+                  label.input-group-btn
+                    span.btn.btn-primary
+                      | Select File
+                      input(id="file",type='file', style='display: none;', multiple='',name='file')
+                  input.form-control(type='text', readonly='',value="{{selectedFile}}",style="color:white;background-color:black;")
+                //- input(type='submit', value='Upload!')
+                button.btn.btn-block.btn-success Upload
+        
+    p!= partials.footer
+    script(src="/angular-loading-bar/src/loading-bar.js")
+    script(src="/ang/version.js")

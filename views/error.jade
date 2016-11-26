@@ -1,0 +1,14 @@
+doctype html
+html(lang='en')
+  head
+    p!= partials.header
+  body(ng-app="VersionApp")
+    div.container(ng-controller="VersionController",ng-init="initialize();",)
+      p!= partials.navbar
+      form(id="form")
+        div.well.well-lg
+          h1 Oops!
+          h3 This page does not exist.
+        input(name='_csrf', type='hidden', value=csrfToken)
+    p!= partials.footer
+    script(src="/ang/version.js")

@@ -1,0 +1,82 @@
+doctype html
+html(lang='en')
+  head
+    p!= partials.header
+  body(ng-app="TuneApp")
+    div.container(ng-controller="TuneController",ng-init="initialize(#{ JSON.stringify(data) });",)
+      p!= partials.navbar
+      form(id="form")
+        span
+          div.input-group.input-group-lg(ng-show="views.name",style="width:25%")
+            input.form-control(type='text',name='name',ng-value="data.name",ng-model="data.name",style="width:100%")
+            span.input-group-btn
+              button.btn.btn-default(type="button",ng-click="toggleView('name');")
+                  span.glyphicon.glyphicon-save(ng-show="views.name")
+          h1(ng-show="!views.name") {{data.name}}
+            button.btn.btn-default.btn-edit(type="button",ng-click="toggleView('name');")
+                span.glyphicon.glyphicon-save(ng-show="views.name")
+                span.glyphicon.glyphicon-edit(ng-show="!views.name")
+        div.well.well-lg
+          div.row
+            div.col-md-12
+              div.well
+                h3.notop Description
+                  span.button.btn.btn-default.btn-edit(type="button",ng-click="toggleView('description');")
+                    span.glyphicon.glyphicon-save(ng-show="views.description")
+                    span.glyphicon.glyphicon-edit(ng-show="!views.description")
+                div.input-group.wide(ng-show="views.description")
+                  input.form-control(ng-show="views.description",type='text',name='description',ng-value="data.description",ng-model="data.description")
+                h4(ng-show="!views.description") {{data.description}}
+          br
+
+          // TAGS
+          h3.notop Tags
+            span.button.btn.btn-default.btn-edit(type="button",ng-click="toggleView('tags');")
+              span.glyphicon.glyphicon-save(ng-show="views.tags")
+              span.glyphicon.glyphicon-edit(ng-show="!views.tags")
+          div.well.well-lg(ng-show="views.tags")
+            i(style="color: #888888") Add tags/keywords to help people find this tune. Click a tag to remove it. 8 tag limit.
+            br
+            br
+            div.row
+              .input-group
+                span.input-group-addon Tag
+                input#name.form-control(type='text', aria-describedby='tagText', name='tagText',ng-value="tagText",ng-model="tagText")
+                span.input-group-btn
+                  button.btn.btn-default(type='button',ng-click="addTag();")
+                    span.glyphicon.glyphicon-plus
+            br
+            div.well.well-lg
+              span
+                i(ng-show="data.tags.length===0") No tags
+                span.label.label-primary.label-tag(
+                  ng-repeat="tag in data.tags track by $index",
+                  ng-click="deleteTag(tag);"
+                  ) {{tag}}
+            br
+          div.well.well-lg(ng-show="!views.tags")
+            span
+              i(ng-show="data.tags.length===0") No tags
+              span.label.label-default.label-tag(
+                ng-repeat="tag in data.tags track by $index",
+                ) {{tag}}
+            br
+          h3.notop Versions
+          div.well.well-lg
+            table.table.table-striped
+              thead
+                tr
+                  th Version #
+                  th Date
+                  th Description
+              tbody
+                tr.row-hover(ng-repeat="(index,version) in data.versions track by $index", ng-click="redirect('/version/' + version._id);")
+                  td {{index+1}}
+                  td {{version.dateCreated.toLocaleDateString()}}
+                  td {{version.description}}
+          button.login.btn.btn-danger(type='button',ng-click="submitForm(true)") Delete
+        input(type="hidden",name="delete",id="delete")
+        input(name='_csrf', type='hidden', value=csrfToken)
+        button.login.btn.btn-primary.btn-lg.btn-block(type='button',ng-click="submitForm(false)") Save
+    p!= partials.footer
+    script(src="/ang/tune.js")
