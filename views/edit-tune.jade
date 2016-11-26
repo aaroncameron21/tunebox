@@ -61,20 +61,25 @@ html(lang='en')
                 ng-repeat="tag in data.tags track by $index",
                 ) {{tag}}
             br
-          h3.notop Versions
-          div.well.well-lg
-            table.table.table-striped
-              thead
-                tr
-                  th Version #
-                  th Date
-                  th Description
-              tbody
-                tr.row-hover(ng-repeat="(index,version) in data.versions track by $index", ng-click="redirect('/version/' + version._id);")
-                  td {{index+1}}
-                  td {{version.dateCreated.toLocaleDateString()}}
-                  td {{version.description}}
-          button.login.btn.btn-danger(type='button',ng-click="submitForm(true)") Delete
+          div(ng-hide="data.versions.length>0")
+            a.btn.btn-block.btn-primary(href="/version?tune={{data._id}}") Add First Version
+            br
+          div(ng-show="data.versions.length>0")
+            h3.notop Versions
+            div.well.well-lg
+              a.btn.btn-block.btn-primary(href="/version?tune={{data._id}}") Add Version
+              table.table.table-striped
+                thead
+                  tr
+                    th Version #
+                    th Date
+                    th Description
+                tbody
+                  tr.row-hover(ng-repeat="(index,version) in data.versions track by $index", ng-click="redirect('/version/' + version._id);")
+                    td {{index+1}}
+                    td {{version.dateCreated.toLocaleDateString()}}
+                    td {{version.description}}
+          button.login.btn.btn-warning(type='button',ng-click="submitForm(true)") Delete
         input(type="hidden",name="delete",id="delete")
         input(name='_csrf', type='hidden', value=csrfToken)
         button.login.btn.btn-primary.btn-lg.btn-block(type='button',ng-click="submitForm(false)") Save
